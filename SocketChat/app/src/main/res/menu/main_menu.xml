@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"/>
+
+    <item
+        android:title="@string/more_options"
+        android:icon="@drawable/ic_more_options"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/createRoom"
+                android:title="@string/create_room" />
+
+            <item
+                android:id="@+id/logout"
+                android:title="@string/logout" />
+        </menu>
+    </item>
+
+</menu>

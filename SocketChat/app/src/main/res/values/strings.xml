@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">SocketChat</string>
+
+    <!-- Sign Up & Sign In Screen Text -->
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="have_account">Already have an account? Sign in</string>
+    <string name="havent_account">Dont have an account? Sign up</string>
+
+    <!-- Menu Text -->
+    <string name="logout">Logout</string>
+    <string name="create_room">Create Room</string>
+    <string name="search">Search</string>
+    <string name="more_options">More Options</string>
+
+    <!-- Send Message EditText Hint -->
+    <string name="message">Message…</string>
+
+    <!-- Toolbar Text View -->
+    <string name="toolbar_username">Username</string>
+    <string name="toolbar_name">Room Chat</string>
+
+    <!-- Sender Username -->
+    <string name="receiver_name">John Doe</string>
+
+    <!-- Message Time -->
+    <string name="message_time">12:00 PM</string>
+
+    <!-- No Users Yet Text View -->
+    <string name="no_users">There are no users online yet..!</string>
+
+    <!-- First Letter Form Username -->
+    <string name="username_first_letter">O</string>
+
+</resources>
