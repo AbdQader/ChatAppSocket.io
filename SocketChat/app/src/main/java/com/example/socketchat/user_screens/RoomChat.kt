@@ -1,23 +1,24 @@
 package com.example.socketchat.user_screens
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import com.example.socketchat.MyApp
 import com.example.socketchat.R
 import com.example.socketchat.adapter.RoomMessageAdapter
 import com.example.socketchat.keys.Keys
-import com.example.socketchat.model.RoomMessage
-import com.example.socketchat.model.User
+import com.example.socketchat.models.RoomMessage
+import com.example.socketchat.models.User
 import com.example.socketchat.sharedPreferences.MySharedPrefernces
 import com.github.nkzawa.socketio.client.Socket
+import kotlinx.android.synthetic.main.chat_screen.view.*
 import kotlinx.android.synthetic.main.room_chat.*
 import kotlinx.android.synthetic.main.room_chat.view.*
+import kotlinx.android.synthetic.main.room_chat.view.imgNoMessages
+import kotlinx.android.synthetic.main.room_chat.view.txtNoMessages
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -43,8 +44,8 @@ class RoomChat : Fragment() {
     private var mSocket: Socket? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.room_chat, container, false)
@@ -127,9 +128,12 @@ class RoomChat : Fragment() {
             rv_room_chat_messages.scrollToPosition(roomMessages.size - 1)
             // to clean edit text box
             txtRoomChatMessage.text.clear()
+            // to hide the text & image placeholder
+            root.imgNoMessages.visibility = View.GONE
+            root.txtNoMessages.visibility = View.GONE
             // to hide keyboard
-            val inputManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            //val inputManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            //inputManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     } // end of sendRoomMessage method
 
@@ -145,18 +149,30 @@ class RoomChat : Fragment() {
                     {
                         if (MySharedPrefernces.getUserId() == destinationId[i])
                         {
-                            roomMessages.add(RoomMessage(
+                            // add the message to the room messages list
+                            roomMessages.add(
+                                RoomMessage(
                                     message.getString(Keys.MESSAGE_CONTENT),
                                     message.getString(Keys.SOURCE_ID),
                                     message.getString(Keys.SOURCE_NAME),
                                     message.getJSONArray(Keys.DESTINATION_ID),
                                     message.getJSONArray(Keys.DESTINATION_Name),
-                                    Calendar.getInstance().time))
+                                    Calendar.getInstance().time
+                                )
+                            )
+
+                            // to hide the text & image placeholder
+                            root.imgNoMessages.visibility = View.GONE
+                            root.txtNoMessages.visibility = View.GONE
+
+                            // notify the adapter
                             roomMessageAdapter.notifyDataSetChanged()
+                            // scroll down to the last message sent
                             rv_room_chat_messages.scrollToPosition(roomMessages.size - 1)
                             break // return@on
                         }
                     }
+
                 } catch (exception: Exception) {
                     Log.e("abd", "receiveRoomMessage: ${exception.message}")
                 }

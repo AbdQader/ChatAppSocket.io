@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socketchat.R
-import com.example.socketchat.model.User
+import com.example.socketchat.models.User
 import kotlinx.android.synthetic.main.user_item.view.*
 
 class UserAdapter(

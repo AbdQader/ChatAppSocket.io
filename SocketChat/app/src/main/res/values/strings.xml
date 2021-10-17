@@ -8,7 +8,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="have_account">Already have an account? Sign in</string>
-    <string name="havent_account">Dont have an account? Sign up</string>
+    <string name="havent_account">Don\'t have an account? Sign up</string>
 
     <!-- Menu Text -->
     <string name="logout">Logout</string>
@@ -17,7 +17,7 @@
     <string name="more_options">More Options</string>
 
     <!-- Send Message EditText Hint -->
-    <string name="message">Message…</string>
+    <string name="message">Type a message…</string>
 
     <!-- Toolbar Text View -->
     <string name="toolbar_username">Username</string>
@@ -31,6 +31,9 @@
 
     <!-- No Users Yet Text View -->
     <string name="no_users">There are no users online yet..!</string>
+
+    <!-- No Messages Yet Text View -->
+    <string name="no_messages">There are no messages yet..!</string>
 
     <!-- First Letter Form Username -->
     <string name="username_first_letter">O</string>

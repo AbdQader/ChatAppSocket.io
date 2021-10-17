@@ -10,8 +10,8 @@ import com.example.socketchat.MyApp
 import com.example.socketchat.R
 import com.example.socketchat.adapter.UserAdapter
 import com.example.socketchat.keys.Keys
-import com.example.socketchat.login_register.SignIn
-import com.example.socketchat.model.User
+import com.example.socketchat.auth_screens.SignIn
+import com.example.socketchat.models.User
 import com.example.socketchat.sharedPreferences.MySharedPrefernces
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.Socket
@@ -84,25 +84,28 @@ class OnlineUsers : Fragment(), UserAdapter.OnItemClickListener {
         // when connect error
         mSocket!!.on(Socket.EVENT_CONNECT_ERROR) {
             activity!!.runOnUiThread {
-                Log.e("EVENT_CONNECT_ERROR", "EVENT_CONNECT_ERROR: ")
+                Log.e("abd", "EVENT_CONNECT_ERROR:")
             }
         }
+
         // when connect timeout
         mSocket!!.on(Socket.EVENT_CONNECT_TIMEOUT) {
             activity!!.runOnUiThread {
-                Log.e("EVENT_CONNECT_TIMEOUT", "EVENT_CONNECT_TIMEOUT: ")
+                Log.e("abd", "EVENT_CONNECT_TIMEOUT:")
             }
         }
+
         // when disconnecting
         mSocket!!.on(Socket.EVENT_DISCONNECT) {
             activity!!.runOnUiThread {
-                Log.e("onDisconnect", "Socket onDisconnect!")
+                Log.e("abd", "Socket onDisconnect!")
             }
         }
+
         // when connecting
         mSocket!!.on(Socket.EVENT_CONNECT) {
             activity!!.runOnUiThread {
-                Log.e("onConnect", "Socket Connected!")
+                Log.e("abd", "Socket Connected!")
                 // send user data to the server
                 mSocket!!.emit(Keys.USER_JOIN, sendUserDataToServer())
             }
@@ -191,7 +194,7 @@ class OnlineUsers : Fragment(), UserAdapter.OnItemClickListener {
                     // remove duplicated users
                     for (u in 0 until users.size)
                     {
-                        if(users[u].userId.equals(jsonObject.getString(Keys.USER_ID), true))
+                        if (users[u].userId.equals(jsonObject.getString(Keys.USER_ID), true))
                             users.remove(users[u])
                     }
                     // add the user to users array
@@ -200,6 +203,7 @@ class OnlineUsers : Fragment(), UserAdapter.OnItemClickListener {
                             jsonObject.getString(Keys.USER_NAME),
                             jsonObject.getString(Keys.USER_Email)
                     ))
+                    // check if the users list is empty or not
                     if (users.isEmpty())
                     {
                         root.imgNoUsers.visibility = View.VISIBLE
@@ -223,6 +227,7 @@ class OnlineUsers : Fragment(), UserAdapter.OnItemClickListener {
         activity!!.supportFragmentManager.beginTransaction()
                 .addToBackStack(null).replace(R.id.main_container, fragment).commit()
     }
+
     private fun replaceFragmentWithoutStack(fragment: Fragment)
     {
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_container, fragment).commit()

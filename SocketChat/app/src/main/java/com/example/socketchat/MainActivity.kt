@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.socketchat.keys.Keys
-import com.example.socketchat.login_register.SignIn
+import com.example.socketchat.auth_screens.SignIn
 import com.example.socketchat.sharedPreferences.MySharedPrefernces
 import com.example.socketchat.user_screens.OnlineUsers
 import com.github.nkzawa.socketio.client.Socket

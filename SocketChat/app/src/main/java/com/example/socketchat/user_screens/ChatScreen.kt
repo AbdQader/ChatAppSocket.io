@@ -1,18 +1,16 @@
 package com.example.socketchat.user_screens
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.example.socketchat.MyApp
 import com.example.socketchat.R
 import com.example.socketchat.adapter.MessageAdapter
 import com.example.socketchat.keys.Keys
-import com.example.socketchat.model.Message
-import com.example.socketchat.model.User
+import com.example.socketchat.models.Message
+import com.example.socketchat.models.User
 import com.example.socketchat.sharedPreferences.MySharedPrefernces
 import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.chat_screen.*
@@ -38,8 +36,8 @@ class ChatScreen : Fragment() {
     private var mSocket: Socket? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.chat_screen, container, false)
@@ -117,9 +115,12 @@ class ChatScreen : Fragment() {
             rv_chat_messages.scrollToPosition(messages.size - 1)
             // to clean edit text box
             txtMessage.text.clear()
+            // to hide the text & image placeholder
+            root.imgNoMessages.visibility = View.GONE
+            root.txtNoMessages.visibility = View.GONE
             // to hide keyboard
-            val inputManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            //val inputManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            //inputManager.hideSoftInputFromWindow(activity!!.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     } // end of sendMessage method
 
@@ -130,14 +131,22 @@ class ChatScreen : Fragment() {
             activity!!.runOnUiThread {
                 try {
                     val message = args[0] as JSONObject
-                    if (MySharedPrefernces.getUserId() == message.getString(Keys.DESTINATION_ID))
+                    if (message.getString(Keys.DESTINATION_ID) == MySharedPrefernces.getUserId())
                     {
                         // add the message to the messages array
-                        messages.add(Message(
+                        messages.add(
+                            Message(
                                 message.getString(Keys.MESSAGE_CONTENT),
                                 message.getString(Keys.SOURCE_ID),
                                 message.getString(Keys.SOURCE_NAME),
-                                Calendar.getInstance().time))
+                                Calendar.getInstance().time
+                            )
+                        )
+
+                        // to hide the text & image placeholder
+                        root.imgNoMessages.visibility = View.GONE
+                        root.txtNoMessages.visibility = View.GONE
+
                         // notify the adapter
                         messageAdapter.notifyDataSetChanged()
                         // scroll down to the last message sent

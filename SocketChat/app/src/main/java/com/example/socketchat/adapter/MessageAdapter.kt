@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socketchat.R
-import com.example.socketchat.model.Message
+import com.example.socketchat.models.Message
 import com.example.socketchat.sharedPreferences.MySharedPrefernces
 import kotlinx.android.synthetic.main.receiver_text_message.view.*
 import kotlinx.android.synthetic.main.sender_text_message.view.*

@@ -2,7 +2,7 @@
 var socketIO = require('socket.io'),
     http = require('http'),
     port = process.env.PORT || 4000,
-    ip = process.env.IP || '192.168.1.108',
+    ip = process.env.IP || '192.168.1.107',
     server = http.createServer().listen(port, ip, function() {
         console.log("IP = " , ip);
         console.log("start socket successfully");
@@ -22,17 +22,19 @@ var run = function(socket) {
 
     // to recieve the message and forwared it for all users
     socket.on("message", function(value) {
+        console.log(value.sourceName + ": " + value.messageContent);
         socket.broadcast.emit("message", value);
     });
     
     // to recieve the message and forwared it for all users
     socket.on("room-message", function(value) {
+        console.log(value.sourceName + ": " + value.messageContent);
         socket.broadcast.emit("room-message", value);
     });
 
     // to add the new user to the users list
     socket.on("user-join", function(value) {
-        console.log(value.userName);  // print the username in the console
+        console.log(value.userName + " Join");  // print the username in the console
         currentUserId = value.userId; // hold the current user id so we can remove it when it's disconnected
         users.push(value);            // add the user to users array
         socket.broadcast.emit("users-connected", users); // send users array to the client
@@ -40,7 +42,7 @@ var run = function(socket) {
 
     // this listener will send all the users for the client
     socket.on("request-users", function() {
-        console.log("client asked for users");
+        //console.log("client asked for users");
         socket.emit("users-connected", users);
     });
 
